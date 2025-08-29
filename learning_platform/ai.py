@@ -11,7 +11,9 @@ import subprocess
 from typing import List, Dict, Any
 
 # Configuración inicial
-os.environ["GOOGLE_API_KEY"] = "AIzaSyD6LmHAzx18M5B6sksVVOShR7I1zvGQUTA"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if GOOGLE_API_KEY:
+    os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 
 def check_dependencies():
     """Verificar dependencias requeridas"""
