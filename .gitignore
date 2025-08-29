@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.env
+db-data/
+*.sqlite3
+*.log
+*.bak
+*.db
+venv/
+*.pkl
+*.cache
+*.ipynb_checkpoints
+node_modules/
+*.egg-info/
+/.vscode/
+/.idea/
+Docker/.env

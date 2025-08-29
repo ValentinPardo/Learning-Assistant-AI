@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  server:
+    build:
+      context: ..  # Cambiar contexto al directorio padre
+      dockerfile: Docker/Dockerfile
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - HF_TOKEN=${HF_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../learning_platform:/app/learning_platform  # Montar solo learning_platform para desarrollo
+    networks:
+      - app-network
+
+  db:
+    image: postgres:latest
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=learning_platform_db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge
+
+  
